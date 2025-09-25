@@ -1,53 +1,11 @@
-* {
-    font-family: 'SUIT', sans-serif;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 30px;
-    background-color: #f5f5f5;
-    padding: 15px;
-    font-size: 24px;
-    border-bottom: 1px solid black;
-    text-align: center;
-}
-
-.container {
-    position: fixed;
-    top: 60px;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    height: calc(100vh - 60px); /* 헤더 높이를 제외한 화면 전체 */
-    justify-content: center; 
-}
-
 .posts-wrapper {
     width: 500px; 
-    padding: 10px;
     text-align: center;
     height: 100%;
 }
 
-#profile-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: absolute;
-    right: calc((100vw - 440px) / 2);  
-}
-
 #posts-title {
+    margin-top: 30px;
     font-size: 18px;
 }
 
@@ -98,6 +56,7 @@ header {
     text-align: left;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .post-title {
@@ -121,18 +80,19 @@ header {
     margin: 15px 0;
 }
 
-.comment-section {
+.user-section {
     padding:0 20px;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
 
-.comment-profile {
+.user-profile {
     width: 25px;
     height: 25px;
     border-radius: 50%;
     margin-right: 10px;
+    object-fit: cover;
 }
 
 #nickname {

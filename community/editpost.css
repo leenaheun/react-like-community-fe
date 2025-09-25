@@ -1,63 +1,14 @@
-* {
-    font-family: 'SUIT', sans-serif;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 30px;
-    background-color: #f5f5f5;
-    padding: 15px;
-    font-size: 24px;
-    border-bottom: 1px solid black;
-    text-align: center;
-}
-
-.container {
-    position: fixed;
-    top: 60px;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    height: calc(100vh - 60px); /* 헤더 높이를 제외한 화면 전체 */
-    justify-content: center; 
-}
-
 .posts-wrapper {
     width: 500px; 
-    padding: 10px;
     text-align: center;
-}
-
-#profile-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: absolute;
-    right: calc((100vw - 440px) / 2);  
 }
 
 #posts-title {
-    font-size: 18px;
+    margin-bottom: 30px;
 }
 
-.back-btn {
-    position: absolute;
-    left: calc((100vw - 500px) / 2);   
-    background: none;
-    border: none;
+#posts-title b {
     font-size: 24px;
-    cursor:pointer;
-    align-items: center;
 }
 
 .input-group {
@@ -77,7 +28,6 @@ header {
 
 .input-design:focus {
     outline: none;
-
 }
 
 .input-group input {
@@ -102,6 +52,7 @@ header {
     border-bottom: 1px solid #ccc;
     box-sizing: border-box;
     background-color: #f5f5f5;
+    resize: none;
 }
 
 .helper-text {
@@ -118,7 +69,7 @@ header {
     visibility: visible; 
 }
 
-#write-btn {
+#edit-btn {
     width: 300px;
     height: 35px;
     padding: 5px;
@@ -131,7 +82,7 @@ header {
     font-size: 14px;
 }
 
-#write-btn:enabled {
+#edit-btn:enabled {
     cursor:pointer;
 }
 
@@ -152,10 +103,35 @@ header {
     text-align: center;
     font-weight: 400;
     color: #000;
+    flex-shrink: 0; 
 }
 
 .file-group {
     width: 100%;
     display: flex;
     align-items: center;
+}
+
+#file-name {
+    max-width: 200px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-size: 16px;
+}
+
+.divider {
+    font-size: 20px; 
+    margin: 0 8px;
+    color: #999; 
+  }
+
+#delete-img-btn {
+    display: none; 
+    cursor: pointer;
+    color: red;
+    font-size: 14px;
+    white-space: nowrap;
+    margin-left: 10px;
 }

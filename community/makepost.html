@@ -3,45 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">
     <title>게시글 작성</title>
+    <link rel="stylesheet" href="../index.css">
     <link rel="stylesheet" href="makepost.css">
+    <link rel="stylesheet" href="../header.css">
 </head>
 <body>
-    <header>
-        <button class="back-btn" onclick="location.href=`posts.html`">&lt;</button>
-        아무 말 대잔치
-        <img id="profile-img" src="../assets/image/커피.jpg" alt="프로필 이미지">
-    </header>
-    <div id="dropdown"></div>
-    
+    <header-component back profile back-path="posts.html"></header-component>
     <div class="container">
-        <div class="posts-wrapper">
-            <p id="posts-title"><b>게시글 작성</b></p>
-            <div id="form">
-                <div class="input-group">
-                    <label for="title">제목*</label>
-                    <input type="email" class="input-design" id="title" placeholder="제목을 입력해주세요. (최대 26글자)">
-                </div>
-                
-                <div class="input-group">
-                    <label for="content">내용*</label>
-                    <textarea type="text" class="input-design" id="content" placeholder="내용을 입력해 주세요."></textarea>
-                    <p id="content-helper" class="helper-text"></p> 
-                </div>
-                <div class="input-group">
-                    <label for="image">이미지*</label>
-                    <div class="file-group">
-                        <label for="image" class="file-label">파일 선택</label>
-                        <span id="file-name">파일을 선택하세요.</span>
+        <div class="scroll-area">
+            <div class="scroll-content">
+                <div class="posts-wrapper">
+                    <p id="posts-title" class="highlight"><b>게시글 작성</b></p>
+                    <div id="form">
+                        <div class="input-group">
+                            <label for="title">제목*</label>
+                            <input type="email" class="input-design" id="title" placeholder="제목을 입력해주세요. (최대 26글자)">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="content">내용*</label>
+                            <textarea type="text" class="input-design" id="content" placeholder="내용을 입력해 주세요."></textarea>
+                            <p id="content-helper" class="helper-text"></p> 
+                        </div>
+                        <div class="input-group">
+                            <label for="image">이미지</label>
+                            <div class="file-group">
+                                <label for="image" class="file-label">파일 선택</label>
+                                <span id="file-name">파일을 선택하세요.</span>
+                            </div>
+                            <input type="file" id="image">
+                        </div>
+                        <button type="submit" id="write-btn" disabled>완료</button>
                     </div>
-                    <input type="file" id="image">
                 </div>
-                <button type="submit" id="write-btn" disabled>완료</button>
             </div>
         </div>
     </div>
-    <script src="../assets/component/DropdownMenu.js"></script>
-    <script src="makepost.js"></script>
+
+    <script type="module" src="../assets/component/Header.js"></script>
+    <script  type="module" src="makepost.js"></script>
 </body>
 </html>

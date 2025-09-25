@@ -1,84 +1,76 @@
-class DropdownMenu {
-    constructor() {}
+import { getProfileInfo } from "../../api/info.js";
+import { BASE_URL } from "../../config/config.js";
 
-    render(containerId) {
-        const container = document.getElementById(containerId);
+export class DropdownMenu {
+    constructor(profileImg, root) {
+        this.profileImg = profileImg;
+        this.root = root;
+    }
 
-        container.innerHTML = `
+    async render() {
+        const result = await getProfileInfo();
+        if (!result.success) {
+            console.log(result.message);
+            return;
+        }
+
+        const user = result.data;
+        this.profileImg.src = `${BASE_URL}${user.profileImgUrl}`;
+
+        const dropdown = document.createElement("div");
+        dropdown.classList.add("profile-dropdown");
+        dropdown.innerHTML = `
             <style>
                 .profile-dropdown {
                     display: none;
-                    transition: opacity 0.1s ease, visibility 0.1s ease;
                     position: absolute;
                     right: calc((100vw - 500px) / 2);
                     top: 55px;
                     width: 120px;
                     height: 120px;
-                    z-index: 2000;
+                    z-index: 9999;
                 }
-
-                .profile-dropdown.active {
-                    display: block;
-                }
-
                 .menu-button {
-                    padding:5px 0;
+                    padding: 5px 0;
                     height: 30px;
                     text-align: center;
                     cursor: pointer;
                     background: #d9d9d9;
                     display: flex;
-                    justify-content: center; 
+                    justify-content: center;
                     align-items: center;
                 }
                 .menu-button:hover {
                     background: #E9E9E9;
                 }
-
                 .menu-button a {
-                    text-decoration: none;
                     color: black;
+                    text-decoration: none;
                     font-size: 15px;
                 }
-
-                .menu-button a:hover {
-                    color: black; 
-                }
-            </style>    
-            <div id="profile-menu" class="profile-dropdown">
-                <div class="menu-button">
-                    <a href="../profile/editprofile.html">회원정보 수정</a>
-                </div>
-                <div class="menu-button">
-                    <a href="../profile/editpassword.html">비밀번호 수정</a>
-                </div>
-                <div class="menu-button">
-                    <a href="../auth/login.html">로그아웃</a>
-                </div>
-            </div>
+            </style>
+            <div class="menu-button"><a href="../profile/editprofile.html">회원정보 수정</a></div>
+            <div class="menu-button"><a href="../profile/editpassword.html">비밀번호 변경</a></div>
+            <div class="menu-button" id="logout-btn"><a href="#">로그아웃</a></div>
         `;
 
-        // 이벤트 리스너 추가
-        this.addEventListeners();
-    }
+        this.root.appendChild(dropdown);
 
-    addEventListeners() {
-        const profileImg = document.getElementById('profile-img');
-        const profileMenu = document.getElementById('profile-menu');
-
-        profileImg.addEventListener("click", (e) => {
+        this.profileImg.addEventListener("click", (e) => {
             e.stopPropagation();
-            profileMenu.classList.toggle("active");
-        });
-
-        profileMenu.addEventListener("click", (e) => {
-            e.stopPropagation();
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         });
 
         window.addEventListener("click", (e) => {
-            if (!profileImg.contains(e.target) && !profileMenu.contains(e.target)) {
-                profileMenu.classList.remove("active");
+            if (!dropdown.contains(e.target)) {
+                dropdown.style.display = "none";
             }
+        });
+
+        dropdown.querySelector("#logout-btn").addEventListener("click", () => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            window.location.href = "../auth/login.html";
         });
     }
 }

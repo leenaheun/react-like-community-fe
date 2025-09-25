@@ -1,66 +1,56 @@
+import { loginUser } from "../api/userService.js";
+import { CustomAlert } from "../assets/component/CustomAlert.js";
+import {
+    validateEmail,
+    validatePassword,
+    showHelper,
+    hideHelper
+} from "../utils/validation.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
     const passwordInput = document.getElementById("password");
     const loginButton = document.getElementById("login-button");
 
-    function showError(id, message) {
-        const element = document.getElementById(id);
-        element.textContent = message;
-        element.style.visibility = "visible";
-    }
+    const alertBox = new CustomAlert();
 
-    function hideError(id) {
-        document.getElementById(id).style.visibility = "hidden";
-    }
-
-    function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    function validatePassword(password) {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/;
-        return passwordRegex.test(password);
-    }
-
+    // [UI 처리] 로그인 버튼 활성화
     function updateButtonState() {
-        if (validateEmail(emailInput.value) && validatePassword(passwordInput.value)) {
-            loginButton.style.backgroundColor = "#7F6AEE"; 
-            loginButton.disabled = false;
-        } else {
-            loginButton.style.backgroundColor = "#ACA0EB"; 
-            loginButton.disabled = true;
-        }
+        const emailValid = !validateEmail(emailInput);
+        const passwordValid = !validatePassword(passwordInput.value);
+
+        const isValid = emailValid && passwordValid;
+        loginButton.disabled = !isValid;
+        loginButton.style.backgroundColor = isValid ? "#7F6AEE" : "#ACA0EB";
     }
 
+    // [이벤트 처리] 입력 유효성 검사
     emailInput.addEventListener("input", function () {
+        const msg = validateEmail(emailInput);
+        msg ? showHelper("email-helper", msg) : hideHelper("email-helper");
         updateButtonState();
-        if (!validateEmail(emailInput.value)) {
-            showError("email-helper", "올바른 이메일 주소 형식을 입력해주세요.");
-        } else {
-            hideError("email-helper");
-        }
     });
-
+    
     passwordInput.addEventListener("input", function () {
+        const msg = validatePassword(passwordInput.value);
+        msg ? showHelper("password-helper", msg) : hideHelper("password-helper");
         updateButtonState();
-        if (!passwordInput.value) {
-            showError("password-helper", "비밀번호를 입력해주세요.");
-        } else if (!validatePassword(passwordInput.value)) {
-            showError("password-helper", "비밀번호는 8~20자이며, 대문자/소문자/숫자/특수문자를 각각 최소 1개 포함해야 합니다.");
-        } else {
-            hideError("password-helper");
-        }
     });
 
-    loginButton.addEventListener("click", function (event) {
+     // [이벤트 처리] 로그인 버튼 클릭
+    loginButton.addEventListener("click", async function (event) {
         event.preventDefault();
-        if (!validateEmail(emailInput.value) || !validatePassword(passwordInput.value)) {
-            alert("아이디 또는 비밀번호를 확인해주세요.");
-            return;
-        }
-        else{
+
+        const email = emailInput.value;
+        const password = passwordInput.value;
+
+        const result = await loginUser(email, password);
+        if (result.success) {
             window.location.href = "../community/posts.html";
+        } else if (result.status === 401) {
+            alertBox.show("이메일 또는 비밀번호가 올바르지 않습니다.");
+        }else {
+            console.log(result.message); 
         }
     });
 });

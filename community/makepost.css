@@ -1,64 +1,14 @@
-* {
-    font-family: 'SUIT', sans-serif;
-}
-
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 30px;
-    background-color: #f5f5f5;
-    padding: 15px;
-    font-size: 24px;
-    border-bottom: 1px solid black;
-    text-align: center;
-}
-
-.container {
-    position: fixed;
-    top: 60px;
-    text-align: center;
-    width: 100%;
-    display: flex;
-    height: calc(100vh - 60px); /* 헤더 높이를 제외한 화면 전체 */
-    justify-content: center; 
-}
-
 .posts-wrapper {
     width: 500px; 
-    padding: 10px;
     text-align: center;
-}
-
-#profile-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    position: absolute;
-    right: calc((100vw - 440px) / 2);  
 }
 
 #posts-title {
-    font-size: 18px;
+    margin-bottom: 30px;
 }
 
-.back-btn {
-    position: absolute;
-    left: calc((100vw - 500px) / 2);   
-    background: none;
-    border: none;
+#posts-title b {
     font-size: 24px;
-    cursor:pointer;
-    align-items: center;
 }
 
 .input-group {
@@ -102,6 +52,7 @@ header {
     border-bottom: 1px solid #ccc;
     box-sizing: border-box;
     background-color: #f5f5f5;
+    resize: none;
 }
 
 .helper-text {

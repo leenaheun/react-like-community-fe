@@ -1,28 +1,25 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const deletePostBtn = document.getElementById("deletepost");
-    const deleteModal = document.getElementById("delete-modal");
-    const deleteModal2 = document.getElementById("delete-modal2");
-    const confirmButton = document.getElementById("confirm-btn");
-    const confirmButton2 = document.getElementById("confirm-btn2");
-    const cancelButton = document.getElementById("cancel-btn");
-    const cancelButton2 = document.getElementById("cancel-btn2");
-    const commentList = document.getElementById("comments-list");
-    const commentTexts = document.getElementById("comment-text");
-    const dropdown = new DropdownMenu();
-    
-    dropdown.render("dropdown");
+import { getPostInfo } from "../api/info.js";
+import { addLike, removeLike, deletePost } from "../api/postService.js";
+import { BASE_URL } from "../config/config.js";
+import { Comments } from "../assets/component/comments.js"; 
+import { CustomAlert } from "../assets/component/CustomAlert.js";
 
-    let postData = {
-        title: "첫 번째 게시글",
-        content: "어느 날, 한 소년은 작은 마을에서 살고 있었습니다. 그 마을은 아주 평화롭고 아름다운 곳이었지만, 소년은 항상 새로운 것에 대한 호기심이 넘쳤습니다. 그는 늘 마을 외곽의 숲을 탐험하며, 그곳에서 특별한 것을 발견하고 싶어 했습니다. 어느 날, 소년은 숲속 깊은 곳에서 반짝이는 빛을 발견하고, 그 빛을 따라가기로 결심했습니다.",
-        image: "../assets/image/커피.jpg",
-        likes: 120,
-        views: 10500,
-        commentlist: [],
-        date: "2024-02-19 12:30:00",
-        profileImage: "default-profile.png",
-        nickname: "사용자1"
-    };
+document.addEventListener("DOMContentLoaded", async function () {
+    const editBtn =  document.getElementById("editbtn");
+    const deletePostBtn = document.getElementById("deletebtn");
+    const deleteModal = document.getElementById("delete-modal");
+    const confirmButton = document.getElementById("confirm-btn");
+    const cancelButton = document.getElementById("cancel-btn");
+    const likeBtn = document.getElementById("like-btn");
+    const alertBox = new CustomAlert();
+
+    const params = new URLSearchParams(window.location.search);
+    const postId = params.get("postId");
+    if (!postId) {
+        console.error("postid가 전달되지 않았습니다.");
+        window.location.href = "posts.html";
+        return;
+    }
 
     function formatNumber(num) {
         return num >= 100000 ? `${Math.floor(num / 100000)}00k`
@@ -31,148 +28,99 @@ document.addEventListener("DOMContentLoaded", function () {
             : num;
     }
 
-    function loadPost() {
+    // [데이터 처리] 게시글 데이터 가져오기
+    const result = await getPostInfo(Number(postId));
+    if (!result.success) {
+        console.error(result.message);
+        return;
+    }
+    let postData = result.data;
+ 
+    // [UI 처리] 작성자가 아니면 수정/삭제 버튼 숨김
+    const currentUserId = localStorage.getItem("userId");
+    if (Number(currentUserId) !== postData.user.userId) {
+        editBtn.style.display = "none";
+        deletePostBtn.style.display = "none";
+    }
+
+     // [UI 처리] 게시글 정보 렌더링
+    function renderPost() {
         document.querySelector('.title').innerText = postData.title;
-        document.querySelector('.nickname').innerText = postData.nickname;
-        document.querySelector('.date').innerText = postData.date;
-        document.querySelector('.post-content img').src = postData.image;
-        document.querySelector('.post-content p').innerText = postData.content;
-        document.getElementById('like-count').innerText = formatNumber(postData.likes);
-        document.getElementById('view-count').innerText = formatNumber(postData.views);
-        document.getElementById('comment-count').innerText = formatNumber(postData.commentlist.length);
-    }
+        const isActiveUser = postData.user.active;
+        const profileImgUrl = isActiveUser
+            ? `${BASE_URL}${postData.user.profileImgUrl}`
+            : `${BASE_URL}/profileuploads/default-profile.png`;
 
-    loadPost();
-
-    document.getElementById('like-btn').addEventListener('click', function () {
-        if (this.style.backgroundColor === 'rgb(172, 160, 235)') {
-            postData.likes--;
-            this.style.backgroundColor = '#D9D9D9';
-        } else {
-            postData.likes++;
-            this.style.backgroundColor = '#ACA0EB';
-        }
-        document.getElementById('like-count').innerText = postData.likes;
-    });
-
-    commentTexts.addEventListener('input', function () {
-        const commentBtn = document.getElementById('comment-btn');
-        commentBtn.disabled = this.value.trim() === "";
-    });
-
-    document.getElementById('comment-btn').addEventListener('click', function () {
-        addComment();
-    });
-
-    function addComment() {
-        const commentText = commentTexts.value;
-        const commentItem = document.createElement('div');
-        commentItem.classList.add('comment-item');
-        
-        commentItem.innerHTML = `
-        <div class="post-meta" id="post-meta">
-            <div class="profile-group">
-                <span class="post-img"><img src="../assets/image/커피.jpg" alt="프로필"></span>
-                <span class="nickname">사용자2</span> 
-                <span class="date">2024-02-19 12:30:00</span>
-            </div>
-            <div class="btn-group">
-                <button class="edit-btn" id="edit-btn">수정</button>
-                <button class="delete-btn" id="deletecomment">삭제</button>
-            </div>
-        </div>
-        <div class="comment-content" id="comment-content">${commentText}</div>
-        `;
-        
-        commentList.appendChild(commentItem);
-        commentTexts.value = '';
-        document.getElementById('comment-btn').disabled = true;
-    }
-
-    // 댓글 수정
-    function editComment(commentItem) {
-        const commentTextElement = commentItem.querySelector('.comment-content'); 
-        commentTexts.value = commentTextElement.innerText; 
-        document.getElementById('comment-btn').innerText = '댓글 수정'; 
-
-        const commentBtn = document.getElementById('comment-btn');
-
-        // 기존에 설정된 이벤트 리스너를 제거하고 새 이벤트 설정
-        commentBtn.replaceWith(commentBtn.cloneNode(true)); 
-        const newCommentBtn = document.getElementById('comment-btn');
-
-        newCommentBtn.onclick = function () {
-            if (commentTexts.value.trim() !== "") {
-                commentTextElement.innerText = commentTexts.value; 
-            
-                commentTexts.value = ''; 
-                newCommentBtn.disabled = true; 
-                newCommentBtn.innerText = '댓글 등록'; 
-                newCommentBtn.onclick = addComment;
+        document.querySelector('.nickname').innerText = isActiveUser ? postData.user.nickname : "(알 수 없음)";
+        document.querySelector('.user-img img').src = profileImgUrl;
+        document.querySelector('.date').innerText = postData.createdAt;
+        const postImgElement = document.querySelector('.post-content img');
+        if (postData.postImgUrl) {
+            if (postImgElement) {
+                postImgElement.src = `${BASE_URL}${postData.postImgUrl}`;
+                postImgElement.style.display = "block"; 
             }
-        };
-    }
-
-    function openDeleteModal2(commentItem) {
-        if (deleteModal2) {
-            deleteModal2.style.display = "flex";
-            deleteModal2.commentItem = commentItem;  
+        } else {
+            if (postImgElement) postImgElement.remove(); 
         }
+        document.querySelector('.post-content p').innerText = postData.content;
+        document.getElementById('like-count').innerText = formatNumber(postData.likesCount);
+        document.getElementById('view-count').innerText = formatNumber(postData.views);
+        document.getElementById('comment-count').innerText = formatNumber(postData.commentsCount);
+        likeBtn.classList.toggle("liked", postData.likedByCurrentUser);
     }
+    renderPost();
 
-    function closeDeleteModal2() {
-        if (deleteModal2) deleteModal2.style.display = "none";
-    }
-
-    confirmButton2.addEventListener('click', function () {
-        alert("댓글이 삭제되었습니다.");
-        const commentItem = deleteModal2.commentItem; 
-        commentItem.remove();  
-        closeDeleteModal2();
-        commentTexts.value = '';
-        document.getElementById('comment-btn').disabled = true;
-        document.getElementById('comment-btn').innerText = '댓글 등록';
-    });
-
-    cancelButton2.addEventListener('click', function () {
-        closeDeleteModal2();
-    });
-
-    commentList.addEventListener('click', function (event) {
-        if (event.target && event.target.id === 'deletecomment') {
-            const commentItem = event.target.closest('.comment-item');
-            openDeleteModal2(commentItem);
-        }
-
-        if (event.target && event.target.id === 'edit-btn') {
-            const commentItem = event.target.closest('.comment-item');
-            editComment(commentItem);
+    // [UI 처리] 댓글 렌더링
+    Comments(postData, postId, async () => {
+        const updated = await getPostInfo(Number(postId));
+        if (updated.success) {
+            postData = updated.data;
+            renderPost();
         }
     });
 
-    function openDeleteModal() {
-        if (deleteModal) deleteModal.style.display = "flex";
-    }
+    // [이벤트 처리] 수정 버튼 클릭
+    editBtn.addEventListener('click', function () {
+        window.location.href = "editpost.html?postId=" + postId;
+    });
+    
+    // [이벤트 처리] 좋아요 버튼 클릭(이벤트 위임)
+    document.body.addEventListener("click", async function (e) {
+        const likeBtn = e.target.closest("#like-btn");
+        if (!likeBtn) return;
 
-    function closeDeleteModal() {
-        if (deleteModal) deleteModal.style.display = "none";
-    }
+        const result = likeBtn.classList.contains("liked")
+            ? await removeLike(Number(postId))
+            : await addLike(Number(postId));
 
-    deletePostBtn.addEventListener('click', function () {
-        openDeleteModal();
+        if (result.success) {
+            const updatedResult = await getPostInfo(Number(postId));
+            if (updatedResult.success) {
+                postData = updatedResult.data;
+                renderPost(); 
+            }
+        } else {
+            console.log(result.message);
+        }
     });
 
-    confirmButton.addEventListener('click', function () {
-        alert("게시글이 삭제되었습니다.");
-        closeDeleteModal();
-        window.location.href = "posts.html";
+    // [이벤트 처리] 삭제 버튼 클릭
+    deletePostBtn.addEventListener("click", function () {
+        deleteModal.style.display = "flex";
     });
-
     cancelButton.addEventListener('click', function () {
-        closeDeleteModal();
+        deleteModal.style.display = "none";
+    });
+    confirmButton.addEventListener('click', async function () {
+        const result = await deletePost(Number(postId));
+        if (result.success) {
+            deleteModal.style.display = "none";
+            alertBox.show("게시글이 삭제되었습니다.", () => {
+                window.location.href = `posts.html`;
+            });
+        } else {
+            console.log(result.message);
+        }
     });
 });
-
-
-
-

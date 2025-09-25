@@ -3,32 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/static/woff2/SUIT.css" rel="stylesheet">
     <title>게시판</title>
+    <link rel="stylesheet" href="../index.css">
     <link rel="stylesheet" href="posts.css">
+    <link rel="stylesheet" href="../header.css">
 </head>
 <body>
-    <header>
-        아무 말 대잔치
-        <img id="profile-img" src="../assets/image/커피.jpg" alt="프로필 이미지">
-    </header>
-    <div id="dropdown"></div>
-
+    <header-component profile></header-component>
     <div class="container">
-        <div class="posts-wrapper">
-            <p id="posts-title">안녕하세요,<br>아무 말 대잔치 <b>게시판</b>입니다.</p>
-            <div class="write-btn-section">
-                <button id="write-btn">게시글 작성</button>
-            </div>
-            <div class="post-list-wrapper">
-                <div id="post-list">
-                    <div id="sentinel"></div>
+        <div class="scroll-fullarea">
+            <div class="posts-wrapper">
+                <p id="posts-title">오늘 <b>하루</b>를 기록해보세요!</p>
+                <div class="write-btn-section">
+                    <button id="write-btn">게시글 작성</button>
+                </div>
+                <div class="post-list-wrapper">
+                    <div id="post-list">
+                        <div id="sentinel"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <script src="../assets/component/DropdownMenu.js"></script>
-    <script src="posts.js"></script>
+    <script type="module" src="../assets/component/Header.js"></script>
+    <script type="module" src="posts.js"></script>
 </body>
 </html>

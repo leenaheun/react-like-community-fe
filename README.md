@@ -1,22 +1,44 @@
-# 2-naheun-lee-community-fe
-### 📌 프로젝트 개요
-
-
-게시판에 글을 등록하고 다른 사용자의 글을 볼 수 있는 커뮤니티 만들기  
+# Today's Log
+## 프로젝트 소개
+자신의 하루 일상을 공유하기  
 
 <br/> 
+
+## 기술 스택
+<div>
+<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/HTMLCSS.png?raw=true" width="70">
+<img src="https://github.com/yewon-Noh/readme-template/blob/main/skills/JavaScript.png?raw=true" width="70">
+</div>
+
+
 <br/> 
 
-### 📁 프로젝트 디렉토리 구조
+## 개발 인원 및 기간
+- 개발 기간 : 2024-02-21 ~ 2024-03-30
+- 개발 인원 : 프론트엔드/백엔드 1명
+
+<br/> 
+
+## Backend 링크
+- https://github.com/100-hours-a-week/2-naheun-lee-community-be
+
+<br/> 
+
+## 프로젝트 디렉토리 구조
 
 
 ```html
 2-NAHEUN-LEE-COMMUNITY-FE/
+│── api/
+│   │── info.js
+│   │── postService.js
+│   └── userService.js
+│
 │── assets/
 │   │── component/
-│   │   └── DropdownMenu.js
-│   └── image/
-│       └── 커피.jpg
+│   │── config/
+│   │── fonts/
+│   └── images/
 │
 │── auth/
 │   │── login.css
@@ -48,50 +70,52 @@
 │   │── editprofile.html
 │   └── editprofile.js
 │
+│── header.css
+│── index.css
 └── README.md
 ```
 
-- DropdownMenu: 드롭다운 메뉴 컴포넌트
-- auth: 로그인/회원가입 처리
-- community: 게시판 기능 수행
-- profile: 회원 정보 수정  
-
-<br/> 
 <br/> 
 
-### ✏️ 프로젝트 주요 기능
+## 프로젝트 주요 기능
 
-
-- **로그인 (login.html)**
-    - 이메일, 비밀번호 유효성 검사
-    - 회원가입 페이지로 이동
-    - 로그인
-- **회원가입 (signup.html)**
-    - 이메일, 비밀번호, 닉네임, 프로필 사진 유효성 검사
-    - 로그인 페이지로 이동
-    - 회원가입
-- **게시판 (posts.html)**
-    - 게시글 리스트 인피니티 스크롤
-    - 게시글 작성 페이지로 이동
-    - 각 게시글 조회 페이지로 이동
-- **게시글 조회 (viewpost.html)**
-    - 게시글 수정 페이지로 이동
-    - 게시글 삭제
-    - 좋아요 누르기
+- 로그인
+- 회원가입
+- 게시글 목록
+- 게시글 상세
     - 좋아요수, 조회수, 댓글 확인 가능
     - 댓글 등록/수정/삭제
-- **게시글 수정 (editpost.html)**
-    - 제목, 내용, 이미지 수정 가능
-    - 게시글 조회 페이지로 이동
-- **게시글 작성 (makepost.html)**
-    - 새로운 게시글 등록
-- **드롭다운**
-    - 로그인/회원가입 페이지를 제외한 나머지 페이지의 오른쪽 상단에 프로필을 누르면 드롭다운 메뉴가 보여진다.
-    - 각 메뉴마다 회원정보 수정, 비밀번호 수정 페이지로 이동할 수 있고 로그아웃 할 수 있다.
-- **회원정보 수정(editprofile.html)**
-    - 이메일, 닉네임, 프로필 사진 수정
-    - 완료되면 게시판 페이지로 이동
-    - 회원 탈퇴
-- **비밀번호 수정(editpassword.html)**
-    - 비밀번호 수정
-    - 완료되면 게시판 페이지로 이동
+- 게시글 수정
+- 게시글 작성
+- 회원정보 수정
+- 비밀번호 변경
+
+<br/> 
+
+## 화면 구성
+`홈`
+
+|로그인|회원가입|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/b7456a45-54cc-43dc-bdc1-74ebbd2cc428" width="200"/>|<img src="https://github.com/user-attachments/assets/546bf546-d6f8-47ae-b749-13c9395118c3" width="200"/>|
+
+`게시글`
+
+|게시글 목록|게시글 등록|게시글 수정|게시글 삭제|
+|:---:|:---:|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/42149e34-de6b-49d9-9a1a-4d192941bd05" width="200"/>|<img src="https://github.com/user-attachments/assets/4f6afd19-94a0-4879-b767-0411208be17d" width="200"/>|<img src="https://github.com/user-attachments/assets/38408a18-453f-41c0-8a47-d1f5651594b0" width="200"/>|<img src="https://github.com/user-attachments/assets/071f08b6-1ce7-4c28-92fa-0f278dc1f4ef" width="200"/>|
+
+`댓글`
+
+|댓글 목록|댓글 등록|댓글 수정|댓글 삭제|
+|:---:|:---:|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/7828b506-8f53-4d81-be51-5d83afd9331b" width="200"/>|<img src="https://github.com/user-attachments/assets/57fc2ddc-5071-41ad-93e3-890675690528" width="200"/>|<img src="https://github.com/user-attachments/assets/cbfefa28-4d34-43bd-8801-5edfa9bc22f8" width="200"/>|<img src="https://github.com/user-attachments/assets/da7afb2c-29a5-48cd-9136-cd924220f030" width="200"/>|
+
+`계정 설정`
+
+|회원정보 수정|비밀번호 변경|로그아웃|회원탈퇴|
+|:---:|:---:|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/5df915c7-339c-44f4-b946-e44e4eef4786" width="200"/>|<img src="https://github.com/user-attachments/assets/abd3504a-dc2b-4ee9-9ced-294b68fb76af" width="200"/>|<img src="https://github.com/user-attachments/assets/de53db02-eac5-42fb-be9a-28ca28e14406" width="200"/>|<img src="https://github.com/user-attachments/assets/cfe3b952-8a85-4d54-b9d1-897529cbf384" width="200"/>|
+
+
+
