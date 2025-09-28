@@ -1,6 +1,12 @@
 # Today's Log
 ## 프로젝트 소개
-자신의 하루 일상을 공유하기  
+자신의 하루 일상을 공유하기(리액트처럼 동작하는 프로젝트 구현!) 
+
+<br/> 
+
+## 브랜치
+- vanila js : 기존 커뮤니티 구현 버전
+- react-like : 가상 돔, 상태, 라우터 기능 구현 버전
 
 <br/> 
 
@@ -14,7 +20,7 @@
 <br/> 
 
 ## 개발 인원 및 기간
-- 개발 기간 : 2024-02-21 ~ 2024-03-30
+- 개발 기간 : 2025-02-21 ~ 2025-03-30 (추가 개발 2025-09-12~2025-09-28)
 - 개발 인원 : 프론트엔드/백엔드 1명
 
 <br/> 
@@ -70,8 +76,16 @@
 │   │── editprofile.html
 │   └── editprofile.js
 │
+│── utils/  
+│   │── router.js
+│   │── state.js
+│   │── validation.js
+│   └── vdom.js
+│
+│── index.html
 │── header.css
 │── index.css
+│── index.js
 └── README.md
 ```
 
@@ -116,6 +130,7 @@
 |회원정보 수정|비밀번호 변경|로그아웃|회원탈퇴|
 |:---:|:---:|:---:|:---:|
 |<img src="https://github.com/user-attachments/assets/5df915c7-339c-44f4-b946-e44e4eef4786" width="200"/>|<img src="https://github.com/user-attachments/assets/abd3504a-dc2b-4ee9-9ced-294b68fb76af" width="200"/>|<img src="https://github.com/user-attachments/assets/de53db02-eac5-42fb-be9a-28ca28e14406" width="200"/>|<img src="https://github.com/user-attachments/assets/cfe3b952-8a85-4d54-b9d1-897529cbf384" width="200"/>|
+
 
 
 
