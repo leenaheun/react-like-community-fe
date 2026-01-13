@@ -1,12 +1,7 @@
 # Today's Log
 ## 프로젝트 소개
-자신의 하루 일상을 공유하기(리액트처럼 동작하는 프로젝트 구현!) 
+자신의 하루 일상을 공유하기
 
-<br/> 
-
-## 브랜치
-- vanila js : 기존 커뮤니티 구현 버전
-- react-like : 가상 돔, 상태, 라우터 기능 구현 버전
 
 <br/> 
 
@@ -42,7 +37,6 @@
 │
 │── assets/
 │   │── component/
-│   │── config/
 │   │── fonts/
 │   └── images/
 │
@@ -76,16 +70,14 @@
 │   │── editprofile.html
 │   └── editprofile.js
 │
-│── utils/  
-│   │── router.js
-│   │── state.js
-│   │── validation.js
-│   └── vdom.js
+│── config/
+│   └── configs.js/
 │
-│── index.html
+│── utils/  
+│   └── validation.js
+│
 │── header.css
 │── index.css
-│── index.js
 └── README.md
 ```
 
